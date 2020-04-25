@@ -1,0 +1,49 @@
+parameters:
+  - $ref: ../components/parameters/postId.yaml
+get:
+  tags:
+    - Комментарий
+  summary: Получить информацию о коментариях поста
+  operationId: GetComments
+  description: |
+    Получить информацию о коментариях поста
+  responses:
+    '200':
+      description: Информация о комментариях поста была успешно получена
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Comment.yaml
+    '401':
+      description: Отказано в доступе
+    '404':
+      description: Не найдено
+    '422':
+      description: Неверные данные
+post:
+  tags:
+    - Комментарий
+  summary: Создать  комментарий по ID поста
+  operationId: CreateComment
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Comment.yaml
+      description: Comment resource
+      required: true
+  responses:
+    '201':
+      description: Комментарий был создан
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Comment.yaml
+    '401':
+      description: Отказано в доступе
+    '404':
+      description: Не найдено
+    '422':
+      description: Неверные данные

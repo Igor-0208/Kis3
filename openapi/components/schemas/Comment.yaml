@@ -1,0 +1,33 @@
+type: object
+properties:
+  id:
+    description: Идентификатор коментария
+    allOf:
+      - $ref: ./ResourceId.yaml
+    readOnly: true
+  authorId:
+    description: Идентификатор автора
+    allOf:
+      - $ref: ./ResourceId.yaml
+    readOnly: true
+  postId:
+    description: Идентификатор поста
+    allOf:
+      - $ref: ./ResourceId.yaml
+    readOnly: true
+  commentText:
+    description: Текст коментария
+    type: string
+    maxLength: 500
+  likes:
+    description: Количество положительных оценок
+    type: integer
+    example: 15
+  postedTime:
+    description: Время публикации комментария
+    allOf:
+      - $ref: ./ServerTimestamp.yaml
+  updatedTime:
+    description: Время обновления комментария
+    allOf:
+      - $ref: ./ServerTimestamp.yaml

@@ -1,0 +1,25 @@
+type: object
+properties:
+  id:
+    description: Идентификатор пользователя
+    allOf:
+      - $ref: ./ResourceId.yaml
+    readOnly: true
+  name:
+    decription: ФИО
+    type: string
+  birthDate:
+    description: Дата рождения
+    type: string
+  subscriptions:
+    description: Список пользователей на которые подписан пользователь
+    allOf:
+      - $ref: ./ResourceId.yaml
+  createdTime:
+    description: Время создания аккаунта
+    allOf:
+      - $ref: ./ServerTimestamp.yaml
+  updatedTime:
+    description: Время обновления аккаунта
+    allOf:
+      - $ref: ./ServerTimestamp.yaml

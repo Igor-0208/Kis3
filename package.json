@@ -1,0 +1,15 @@
+{
+  "name": "Twitter",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Twitter@mail.ru",
+  "license": "MIT",
+  "dependencies": {
+    "@redocly/openapi-cli": "^0.11.0"
+  },
+  "scripts": {
+    "start": "openapi preview-docs",
+    "build": "openapi bundle -o dist",
+    "test": "openapi validate"
+  }
+}

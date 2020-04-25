@@ -1,0 +1,8 @@
+name: postId
+in: path
+description: The post identifier string
+required: true
+schema:
+  type: string
+  maxLength: 50
+  pattern: '^[@~\-\.\w]+$'

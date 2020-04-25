@@ -1,0 +1,44 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: Twitter API
+  contact:
+    name: Malakhov
+    email: Twitter@mail.ru
+servers:
+  - url: 'https://example.com/v1.0'
+    description: Live Server
+tags:
+  - name: Пост
+    description: |
+      В этом разделе вы можете получить
+      всю необходимую информацию о постах
+      или о конкретном посте, а также удалить
+      или редактировать информацию о них.
+  - name: Комментарий
+    description: |
+      В этом разделе вы можете получить информацию
+      о всех комментариях определенного поста или о
+      конкретном комментарии, а также изменить или удалить
+      информацию о нем.
+  - name: Пользователь
+    description: |
+      В этом разделе вы можете получить информацию
+      о всех пользователях или о конкретном, а также
+      изменить или удалить информацию о нем.
+security:
+  - SecretApiKey: []
+  - JWT: []
+paths:
+  /posts:
+    $ref: ./paths/posts.yaml
+  '/posts/{id}':
+    $ref: ./paths/posts@{id}.yaml
+  '/comment/{postId}':
+    $ref: ./paths/comment@{postId}.yaml
+  '/comment/{id}':
+    $ref: ./paths/comment@{id}.yaml
+  '/users':
+    $ref: ./paths/users.yaml
+  '/user/{id}':
+    $ref: ./paths/user@{id}.yaml

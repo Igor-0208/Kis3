@@ -1,0 +1,43 @@
+get:
+  tags:
+    - Пост
+  summary: Получить информацию о постах
+  operationId: GetPosts
+  description: |
+    Получить информацию о постах
+  responses:
+    '200':
+      description: Информация о постах была успешно получена
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Post.yaml
+    '401':
+      description: Отказано в доступе
+post:
+  tags:
+    - Пост
+  summary: Добавить новый пост
+  operationId: CreatePost
+  description: |
+    Добавить новый пост
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Post.yaml
+      description: Post resource
+      required: true
+  responses:
+    '200':
+      description: Пост был успешно добавлен
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Post.yaml
+    '401':
+      description: Отказано в доступе
+    '422':
+      description: Неверные данные

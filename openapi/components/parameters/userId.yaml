@@ -1,0 +1,8 @@
+name: userId
+in: path
+description: The user identifier string
+required: true
+schema:
+  type: string
+  maxLength: 50
+  pattern: '^[@~\-\.\w]+$'

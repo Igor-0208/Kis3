@@ -1,0 +1,38 @@
+type: object
+properties:
+  id:
+    description: Идентификатор поста
+    allOf:
+      - $ref: ./ResourceId.yaml
+    readOnly: true
+  authorId:
+    description: Идентификатор автора
+    allOf:
+      - $ref: ./ResourceId.yaml
+    readOnly: true
+  postTitle:
+    description: Заголовок поста
+    type: string
+    maxLength: 50
+  postText:
+    description: Текст поста
+    type: string
+  tags:
+    description: Тэги для фильтрации
+    type: array
+  likes:
+    description: Количество положительных оценок
+    type: integer
+    example: 15
+  views:
+    description: Количество просмотров
+    type: integer
+    example: 1
+  postedTime:
+    description: Время публикации поста
+    allOf:
+      - $ref: ./ServerTimestamp.yaml
+  updatedTime:
+    description: Время обновления поста
+    allOf:
+      - $ref: ./ServerTimestamp.yaml
