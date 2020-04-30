@@ -28,8 +28,6 @@ put:
       application/json:
         schema:
           $ref: ../components/schemas/Comment.yaml
-      description: Comment resource
-      required: true
   responses:
     '201':
       description: Комментарий был добавлен

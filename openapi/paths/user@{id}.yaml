@@ -1,5 +1,3 @@
-parameters:
-  - $ref: ../components/parameters/userId.yaml
 get:
   tags:
     - Пользователь
@@ -28,8 +26,6 @@ put:
       application/json:
         schema:
           $ref: ../components/schemas/User.yaml
-      description: User resource
-      required: true
   responses:
     '201':
       description: Пользователь был добавлен

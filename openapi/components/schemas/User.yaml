@@ -6,7 +6,7 @@ properties:
       - $ref: ./ResourceId.yaml
     readOnly: true
   name:
-    decription: ФИО
+    description: ФИО
     type: string
   birthDate:
     description: Дата рождения

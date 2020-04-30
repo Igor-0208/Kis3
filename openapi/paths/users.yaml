@@ -28,8 +28,6 @@ post:
       application/json:
         schema:
           $ref: ../components/schemas/User.yaml
-      description: User resource
-      required: true
   responses:
     '200':
       description: Пользователь был успешно добавлен

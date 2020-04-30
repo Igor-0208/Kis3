@@ -28,8 +28,6 @@ put:
       application/json:
         schema:
           $ref: ../components/schemas/Post.yaml
-      description: Post resource
-      required: true
   responses:
     '201':
       description: Пост был добавлен
