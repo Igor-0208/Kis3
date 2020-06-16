@@ -34,7 +34,7 @@ paths:
     $ref: ./paths/posts.yaml
   '/posts/{id}':
     $ref: ./paths/posts@{id}.yaml
-  '/comment/{postId}':
+  '/post-comments/{postId}':
     $ref: ./paths/comment@{postId}.yaml
   '/comment/{id}':
     $ref: ./paths/comment@{id}.yaml

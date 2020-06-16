@@ -1,0 +1,478 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: Twitter API
+  contact:
+    name: Malakhov
+    email: Twitter@mail.ru
+servers:
+  - url: 'https://example.com/v1.0'
+    description: Live Server
+tags:
+  - name: Пост
+    description: |
+      В этом разделе вы можете получить
+      всю необходимую информацию о постах
+      или о конкретном посте, а также удалить
+      или редактировать информацию о них.
+  - name: Комментарий
+    description: |
+      В этом разделе вы можете получить информацию
+      о всех комментариях определенного поста или о
+      конкретном комментарии, а также изменить или удалить
+      информацию о нем.
+  - name: Пользователь
+    description: |
+      В этом разделе вы можете получить информацию
+      о всех пользователях или о конкретном, а также
+      изменить или удалить информацию о нем.
+security:
+  - SecretApiKey: []
+  - JWT: []
+paths:
+  /posts:
+    get:
+      tags:
+        - Пост
+      summary: Получить информацию о постах
+      operationId: GetPosts
+      description: |
+        Получить информацию о постах
+      responses:
+        '200':
+          description: Информация о постах была успешно получена
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+        '401':
+          description: Отказано в доступе
+    post:
+      tags:
+        - Пост
+      summary: Добавить новый пост
+      operationId: CreatePost
+      description: |
+        Добавить новый пост
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+      responses:
+        '200':
+          description: Пост был успешно добавлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '401':
+          description: Отказано в доступе
+        '422':
+          description: Неверные данные
+  '/posts/{id}':
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+    get:
+      tags:
+        - Пост
+      summary: Получить пост по ID
+      operationId: GetPost
+      description: |
+        Получить информацию о посте по ID
+      responses:
+        '200':
+          description: Информация о посте успешно получена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '401':
+          description: Отказано в доступе
+        '404':
+          description: Не найдено
+    put:
+      tags:
+        - Пост
+      summary: Добавить или изменить пост по ID
+      operationId: PutPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+      responses:
+        '201':
+          description: Пост был добавлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '401':
+          description: Отказано в доступе
+        '404':
+          description: Не найдено
+        '409':
+          description: Пост существует и не может быть обновлен
+        '422':
+          description: Неверные данные
+    delete:
+      tags:
+        - Пост
+      summary: Удалить пост по ID
+      operationId: DeletePost
+      description: |
+        Удалить пост по ID
+      responses:
+        '204':
+          description: Пост был удален
+        '401':
+          description: Отказано в доступе
+        '402':
+          description: Не можеть быть удален
+        '404':
+          description: Не найдено
+  '/comment/{postId}':
+    parameters:
+      - $ref: '#/components/parameters/postId'
+    get:
+      tags:
+        - Комментарий
+      summary: Получить информацию о коментариях поста
+      operationId: GetComments
+      description: |
+        Получить информацию о коментариях поста
+      responses:
+        '200':
+          description: Информация о комментариях поста была успешно получена
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '401':
+          description: Отказано в доступе
+        '404':
+          description: Не найдено
+        '422':
+          description: Неверные данные
+    post:
+      tags:
+        - Комментарий
+      summary: Создать  комментарий по ID поста
+      operationId: CreateComment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        '201':
+          description: Комментарий был создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '401':
+          description: Отказано в доступе
+        '404':
+          description: Не найдено
+        '422':
+          description: Неверные данные
+  '/comment/{id}':
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+    get:
+      tags:
+        - Комментарий
+      summary: Получить Комментарий по ID
+      operationId: GetComment
+      description: |
+        Получить информацию о комментарии по ID
+      responses:
+        '200':
+          description: Информация о комментарии успешно получена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '401':
+          description: Отказано в доступе
+        '404':
+          description: Не найдено
+    put:
+      tags:
+        - Комментарий
+      summary: Добавить или изменить комментарий по ID
+      operationId: PutComment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        '201':
+          description: Комментарий был добавлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '401':
+          description: Отказано в доступе
+        '404':
+          description: Не найдено
+        '409':
+          description: Комментарий существует и не может быть обновлен
+        '422':
+          description: Неверные данные
+    delete:
+      tags:
+        - Комментарий
+      summary: Удалить комментарий по ID
+      operationId: DeleteComment
+      description: |
+        Удалить комментарий по ID
+      responses:
+        '204':
+          description: Комментарий был удален
+        '401':
+          description: Отказано в доступе
+        '402':
+          description: Не можеть быть удален
+        '404':
+          description: Не найдено
+  /users:
+    get:
+      tags:
+        - Пользователь
+      summary: Получить информацию о пользователях
+      operationId: GetUsers
+      description: |
+        Получить информацию о пользователях
+      responses:
+        '200':
+          description: Информация о пользователях была успешно получена
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '401':
+          description: Отказано в доступе
+    post:
+      tags:
+        - Пользователь
+      summary: Добавить нового пользователя
+      operationId: PostUser
+      description: |
+        Добавить нового пользователя
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Пользователь был успешно добавлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Отказано в доступе
+        '422':
+          description: Неверные данные
+  '/user/{id}':
+    get:
+      tags:
+        - Пользователь
+      summary: Получить пользователя по ID
+      operationId: GetUser
+      description: |
+        Получить информацию о пользователе по ID
+      responses:
+        '200':
+          description: Информация о пользователе успешно получена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Отказано в доступе
+        '404':
+          description: Не найдено
+    put:
+      tags:
+        - Пользователь
+      summary: Добавить или изменить пользователя по ID
+      operationId: PutUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Пользователь был добавлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Отказано в доступе
+        '404':
+          description: Не найдено
+        '409':
+          description: Пользователь существует и не может быть обновлен
+        '422':
+          description: Неверные данные
+    delete:
+      tags:
+        - Пользователь
+      summary: Удалить пользователя по ID
+      operationId: DeleteUser
+      description: |
+        Удалить пользователя по ID
+      responses:
+        '204':
+          description: Пользователь был удален
+        '401':
+          description: Отказано в доступе
+        '402':
+          description: Не можеть быть удален
+        '404':
+          description: Не найдено
+components:
+  schemas:
+    ResourceId:
+      type: string
+      description: The resource ID. Defaults to UUID v4
+      maxLength: 50
+      example: 4f6cf35x-2c4y-483z-a0a9-158621f77a21
+    ServerTimestamp:
+      type: string
+      description: 'Read-only timestamp, automatically assigned on back-end.'
+      format: date-time
+      readOnly: true
+    Post:
+      type: object
+      properties:
+        id:
+          description: Идентификатор поста
+          allOf:
+            - $ref: '#/components/schemas/ResourceId'
+          readOnly: true
+        authorId:
+          description: Идентификатор автора
+          allOf:
+            - $ref: '#/components/schemas/ResourceId'
+          readOnly: true
+        postTitle:
+          description: Заголовок поста
+          type: string
+          maxLength: 50
+        postText:
+          description: Текст поста
+          type: string
+        tags:
+          description: Тэги для фильтрации
+          type: array
+        likes:
+          description: Количество положительных оценок
+          type: integer
+          example: 15
+        views:
+          description: Количество просмотров
+          type: integer
+          example: 1
+        postedTime:
+          description: Время публикации поста
+          allOf:
+            - $ref: '#/components/schemas/ServerTimestamp'
+        updatedTime:
+          description: Время обновления поста
+          allOf:
+            - $ref: '#/components/schemas/ServerTimestamp'
+    Comment:
+      type: object
+      properties:
+        id:
+          description: Идентификатор коментария
+          allOf:
+            - $ref: '#/components/schemas/ResourceId'
+          readOnly: true
+        authorId:
+          description: Идентификатор автора
+          allOf:
+            - $ref: '#/components/schemas/ResourceId'
+          readOnly: true
+        postId:
+          description: Идентификатор поста
+          allOf:
+            - $ref: '#/components/schemas/ResourceId'
+          readOnly: true
+        commentText:
+          description: Текст коментария
+          type: string
+          maxLength: 500
+        likes:
+          description: Количество положительных оценок
+          type: integer
+          example: 15
+        postedTime:
+          description: Время публикации комментария
+          allOf:
+            - $ref: '#/components/schemas/ServerTimestamp'
+        updatedTime:
+          description: Время обновления комментария
+          allOf:
+            - $ref: '#/components/schemas/ServerTimestamp'
+    User:
+      type: object
+      properties:
+        id:
+          description: Идентификатор пользователя
+          allOf:
+            - $ref: '#/components/schemas/ResourceId'
+          readOnly: true
+        name:
+          description: ФИО
+          type: string
+        birthDate:
+          description: Дата рождения
+          type: string
+        subscriptions:
+          description: Список пользователей на которые подписан пользователь
+          allOf:
+            - $ref: '#/components/schemas/ResourceId'
+        createdTime:
+          description: Время создания аккаунта
+          allOf:
+            - $ref: '#/components/schemas/ServerTimestamp'
+        updatedTime:
+          description: Время обновления аккаунта
+          allOf:
+            - $ref: '#/components/schemas/ServerTimestamp'
+  parameters:
+    resourceId:
+      name: id
+      in: path
+      description: The resource identifier string
+      required: true
+      schema:
+        type: string
+        maxLength: 50
+        pattern: '^[@~\-\.\w]+$'
+    postId:
+      name: postId
+      in: path
+      description: The post identifier string
+      required: true
+      schema:
+        type: string
+        maxLength: 50
+        pattern: '^[@~\-\.\w]+$'
